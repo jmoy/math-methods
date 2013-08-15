@@ -1,0 +1,868 @@
+%(c) 2013 Jyotirmoy Bhattacharya
+
+%This document is licensed under the Creative Commons
+%Attribution-NonCommercial-ShareAlike 3.0 Unported License
+
+\documentclass[11pt,reqno,openany]{amsbook}
+\numberwithin{figure}{chapter}
+\numberwithin{equation}{chapter}
+\title{Mathematical Methods for Economics}
+\author{Jyotirmoy Bhattacharya}
+\email{jyotirmoy@jyotirmoy.net}
+\thanks{\copyright\ 2013, Jyotirmoy Bhattacharya.\\This work is licensed under a \href{http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US}{Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License}}
+\date{\today}
+
+\usepackage[paperwidth=6in,paperheight=9in,margin=0.7in]{geometry}
+\usepackage{mathpazo}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=[rgb]{0.1,0.1,0.8}}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[chapter]
+\newtheorem{fact}{Fact}[chapter]
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}[chapter]
+\newtheorem{xca}{Exercise}[chapter]
+\newtheorem{xmpl}{Example}[chapter]
+
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\newcommand{\mat}[1]{\mathbf{#1}}
+\newcommand{\dotprod}[2]{{#1}\cdot{#2}}
+\renewcommand{\Re}{\mathbb{R}}
+
+\begin{document}
+\frontmatter
+\maketitle
+\tableofcontents
+
+\mainmatter
+\chapter{Linear Algebra}
+\section{Vectors}
+We assume that you know how to calculate sums, scalar multiples and
+inner products of vectors. We remind you below of the geometrical
+interpretations of these operations and some properties that they
+satisfy.
+
+\begin{fact}[The Triangle Law for Vector Addition]
+  Suppose
+  \[\vec{c}=\vec{a}+\vec{b}\]
+  If the vectors $\vec{a}$ and $\vec{b}$ are drawn as arrows with the
+  tail of $\vec{b}$ touching the tip of $\vec{a}$ then $\vec{c}$ is an
+  arrow with its tail touching the tail of $\vec{a}$ and its tip
+  touching the tip of $\vec{b}$.
+  
+  \begin{figure}[h]
+  \begin{tikzpicture}[scale=2]
+    \draw [->] (0,0) -- (0,1.8);
+    \draw [->] (0,0) -- (1.8,0);
+    \draw [->, thick] (0,0) -- node[right=0.2] {$\vec{a}$} (1,0.5);
+    \draw [->, thick] (1,0.5) -- node[right=0.2] {$\vec{b}$}  (1.5,1.5);
+    \draw [->, thick] (0,0) -- node[left=0.2] {$\vec{c}$} (1.5,1.5);
+  \end{tikzpicture}
+  \caption{The Triangle Law}
+  \end{figure}
+
+  Vector addition has the following properties
+  \begin{enumerate}
+  \item $\vec{x}+(\vec{y}+\vec{z})=(\vec{x}+\vec{y})+\vec{z}$.
+  \item $\vec{x}+\vec{y}=\vec{y}+\vec{x}$.
+  \item There is a vector $\vec{0}$ such that for any vector
+    $\vec{x}$,
+    \[\vec{x}+\vec{0}=\vec{x}.\]
+  \item For every vector $\vec{x}$ there is a vector $\vec{y}$ such
+    that
+    \[\vec{x}+\vec{y}=\vec{0}.\]
+  \end{enumerate}
+\end{fact}
+%\vfill\pagebreak
+\begin{fact}[Scalar Multiplication]
+  For a vector $\vec{x}$ and a scalar $\alpha\ge 0$, the vector
+  $\alpha\vec{x}$ lies in the same direction as $\vec{x}$ and has
+  $\alpha$ times the length of $\vec{x}$ and the vector
+  $-\alpha\vec{x}$ lies in the direction exactly opposite that of
+  $\vec{x}$ and has $\alpha$ times the length.
+  
+  \begin{figure}[h]
+  \begin{tikzpicture}[scale=2]
+    \draw [<->] (-1,0) -- (1,0);
+    \draw [<->] (0,-1) -- (0,1);
+    \draw [->, thick] (0,0) -- 
+        node[near end,right=0.2] {$\vec{x}$} (0.2,0.3);
+    \draw [->, thick] (0,0) -- 
+        node[near end,right=0.2] {$2\vec{x}$}  (0.4,0.6);
+    \draw [->, thick] (0,0) -- 
+        node[near end,left=0.2] {$-2\vec{x}$} (-0.4,-0.6);
+  \end{tikzpicture}
+  \caption{Scalar Multiplication}
+  \end{figure}
+
+  Scalar multiplication has the following properties
+  \begin{enumerate}
+  \item $\alpha(\beta \vec{x}) = (\alpha \beta) \vec{x}$.
+  \item $\alpha(\vec{x}+\vec{y}) = \alpha\vec{x} + \alpha\vec{y}$.
+  \item $(\alpha + \beta)\vec{x} = \alpha\vec{x} + \beta\vec{x}$.
+  \item $1\vec{x} = \vec{x}$.
+  \end{enumerate}
+\end{fact}
+
+\begin{fact}[Inner Product]
+  Given two vectors $\vec{x}$ and $\vec{y}$ their inner product (also
+  known as dot product or scalar product) is defined as
+  \[\dotprod{\vec{x}}{\vec{y}} = |\vec{x}||\vec{y}| \cos \theta\]
+  where $|\vec{x}|$ and $|\vec{y}|$ denote the length of the vectors
+  and $\theta$ denotes the angle between them.
+
+  \begin{figure}[h]
+  \begin{tikzpicture}[scale=3]
+    \draw [->] (0,0) -- (0,1);
+    \draw [->] (0,0) -- (1,0);
+    \draw [->,thick] (0,0) -- 
+        node [right=0.4] {$\vec{x}$} (10:1);
+    \draw [->,thick] (0,0) -- 
+        node [above=0.1] {$\vec{y}$} (50:1);
+    \draw [->] (10:0.2) node [above=0.06] {$\theta$} arc (10:50:0.2);
+  \end{tikzpicture}
+  \caption{Inner Product}
+  \end{figure}
+
+  The inner product has the following properties
+  \begin{enumerate}
+  \item $\dotprod{\vec{x}}{\vec{y}}=\dotprod{\vec{y}}{\vec{x}}$.
+  \item $\dotprod{(\vec{x}+\vec{y})}{\vec{z}}
+    = \dotprod{\vec{x}}{\vec{z}} + \dotprod{\vec{y}}{\vec{z}}$.
+  \item $\dotprod{(\alpha\vec{x})}{\vec{y}} =
+    \alpha(\dotprod{\vec{x}}{\vec{y}})$.
+  \item $\dotprod{\vec{x}}{\vec{x}}=|\vec{x}|^2$.
+  \end{enumerate}
+\end{fact}
+
+\begin{xca}
+  Prove that the inner product of two vectors is positive if they form
+  an acute angle with each other, negative if they form an obtuse
+  angle with each other and zero if they form a right angle with each other.
+\end{xca}
+
+\begin{xca}
+  Consider two two-dimensional vectors $\vec{x}=\begin{bmatrix} x_1 &
+    x_2 \end{bmatrix}$ and $\vec{y} = \begin{bmatrix} y_1 &
+    y_2 \end{bmatrix}$. Suppose we define their inner product to be
+  \[\dotprod{\vec{x}}{\vec{y}} = x_1 x_2 + y_1 y_2.\]
+  Show that this gives the same answer as our earlier definition
+  \[\dotprod{\vec{x}}{\vec{y}} = |\vec{x}||\vec{y}|\cos \theta.\]
+\end{xca}
+
+\begin{xca}
+  Let $\vec{x}$ be a nonzero vector and define the set
+  \[S = \{\vec{y} \mid \vec{y} = \alpha\vec{x} \text{ for some $\alpha
+    \in \Re$}\}.\]
+  \begin{enumerate}
+    \item What does the set $S$ look like in geometric terms?
+    \item Let $\vec{z}$ be a given vector and let $\vec{p}$ be the
+      point in $S$ closest to $\vec{z}$. Show that it must be the case
+      that
+      \[\dotprod{\vec{z}}{(\vec{z}-\vec{p})}=0.\]
+      Interpret this condition geometrically.
+    \end{enumerate}
+\end{xca}
+\section{Matrices}
+  We assume that you know how to multiply two matrices, a matrix and a
+  scalar a matrix and a vector.
+\begin{fact}[Linearity of matrix-vector multiplication]
+  Let $\mat{A}$ be a $n \times m$ matrix, $\vec{x}$ and
+  $\vec{y}$ be $m$ dimensional vectors and let $\alpha$ be a scalar.
+  Then the following is true,
+  \begin{enumerate}
+    \item $\mat{A}(\vec{x}+\vec{y})=\mat{A}\vec{x} + \mat{A}\vec{y}$.
+    \item $\mat{A}(\alpha\vec{x}) = \alpha (\mat{A}\vec{x})$.
+  \end{enumerate}
+\end{fact}
+
+For vectors the basic operations are addition and scalar
+multiplication. The above Fact says that multiplication by a matrix
+``preserves'' these operations in the sense that if we think of matrix
+multiplication as a black box that takes in one vector and gives us
+another then any relation between vectors that can be expressed in
+terms of sums and scalar products is preserved when the vectors are
+passed through this black box.
+
+\begin{fact}[Invertibility]
+  For a square matrix $\mat{A}$ the following conditions are
+  equivalent
+  \begin{enumerate}
+  \item There is a matrix $\mat{B}$ such that 
+    \[\mat{A}\mat{B}=\mat{B}\mat{A}=\mat{I}.\]
+  \item $\mat{A}\vec{x}=0$ implies $\vec{x}=\vec{0}$.
+  \item $\mat{A}\vec{x}=\mat{A}\vec{y}$ implies $\vec{x}=\vec{y}$.
+  \item $\det(\mat{A}) \ne 0$.
+  \end{enumerate}
+\end{fact}
+
+\chapter{Differentiation: single variable}
+In this chapter we shall assume that all functions are defined over
+all of $\Re$ and take values in $\Re$.
+
+\begin{defn}
+  Given a function $f$ and a point $x$ if there is a
+  number $f'(x)$ such that
+  \[f'(x) = \lim_{y \to x} \frac{f(y)-f(x)}{y-x}\]
+  then we say that $f$ is differentiable at $x$ and its derivative
+  at $x$ equals $f'(x)$.
+\end{defn}
+
+We can rearrange the above expression and say that the
+function~$f$ is differentiable at $x$ if and only if there is a
+number $f'(x)$ such that 
+\begin{equation}\label{eq:diff1:linapprox}
+\lim_{y \to x} \frac{f(y)-[f(x)+f'(x)(y-x)]}{y-x}
+=0.
+\end{equation}
+
+Here, for given~$x$ the function
+\[g(y) = f(x)+f'(x)(y-x)\] is a equation of a straight line
+passing through $(x,f(x))$ with the slope $f'(x)$. The
+numerator in~\eqref{eq:diff1:linapprox} is the error we make
+if we try to approximate $f(y)$ by $g(y)$. The denominator
+is the distance between $y$ and
+$x$. 
+
+So~\eqref{eq:diff1:linapprox} says that as $y$ comes
+closer to $x$ not only does the error in approximating
+$f(y)$ by $g(y)$ go to zero (you can check that this
+condition is met by any line passing through $(x,f(x)$)
+but also that the ratio of this error to the distance
+between $y$ and $x$ also goes to zero (which is a harder
+condition to meet.). Only if the second condition is also met
+do we say that the function is differentiable. Thus a
+function is differentiable if and only if it has a very good
+linear approximation. As a result, when investigating the
+behaviour of a function near a point, a differentiable
+function can often be replaced by its tangent line.
+
+\begin{thm}[Chain Rule]
+  Given two functions $f$ and $g$ define a new function $h$ by
+  \[h(x)=f(g(x)).\]
+  Suppose $g$ is differentiable at some point $x_0$ and $f$ is
+  differentiable at $g(x_0)$ then $h$ is differentiable at $x_0$ and 
+  \[h'(x_0) = f'(g(x_0))\cdot g'(x_0).\]
+\end{thm}
+
+\begin{thm}[Taylor's theorem; first order]
+  If $f$ is a twice-differentiable function then for any two points
+  $a$ and $b$ there exists a point $\xi$ such that $a \le \xi \le b$
+  and
+  \[f(b) = f(a) + f'(a)(b-a) + \frac{f''(\xi)}{2}(b-a)^2.\]
+\end{thm}
+
+\begin{xca}
+  Argue carefully that for small $h$, $\ln(1+h)$ is approximately
+  equal to $h$. What do you understand by ``approximately equal to''?
+\end{xca}
+
+\chapter{Optimization: single variable}
+\begin{thm}\label{thm:opt1:interior}
+  Suppose the function $f\colon \Re \to \Re$ attains its
+  maximum on the set $D$ at the point $x$. If $x$ lies in
+  the interior of $D$ and $f$ is differentiable at $x$ then
+  it must be the case that
+  \[f'(x)=0.\]
+\end{thm}
+\begin{xca}
+  Prove Theorem~\ref{thm:opt1:interior}. 
+
+  Hint: Let $x$ be as in the theorem. First show that the
+  fraction
+  \[\frac{f(y)-f(x)}{y-x}\]
+  must be less than or equal to zero when $y>x$ and greater
+  than or equal to zero when $y<x$. Now proceed remembering
+  how inequalities behave under limits.
+\end{xca}
+
+Theorem~\ref{thm:opt1:interior} would also have been true if
+we had replaced the word ``maximum'' by the word
+``minimum''.
+
+Theoem~\ref{thm:opt1:interior} gives only a necessary
+condition for a maximum. However, in many economic applications
+this is often all that we need in order to find the maximum. Any point
+in the domain of $f$ must either fail one of the
+preconditions in the theorem or must satisfy its
+conclusion. Therefore the maximum of $f$ must occur at a
+point which is either
+\begin{enumerate}
+\item a boundary point of $D$,
+\item a point where $f$ is not differentiable,
+\item or, a point where $f'(\cdot)=0$.
+\end{enumerate}
+In many economic problems the set of points which satisfy at
+least one of the criteria above is quite small. Since the maximum of the
+function on $D$ must occur among these points it is enough
+to evaluate the objective function $f$ at each of these
+points and choose the one(s) which give the highest value.
+
+\begin{xca}
+Maximise
+\[x + \ln y\]
+subject to
+\[p_x x + p_y y = M,\, x\ge 0,\,y\ge 0,\]
+where $p_x$, $p_y$ and~$M$ are positive constants.
+
+Be careful to consider the possibility of corner
+solutions. Your answer should express the optimal values of
+$x$ and $y$ as a function of $p_x$, $p_y$ and~$M$.
+\end{xca}
+
+For concave $f$ a partial converse of
+Theorem~\ref{thm:opt1:interior} is available.
+
+\begin{thm}
+  If the function $f$ is concave on a convex domain $D$ and
+  $f'(x)=0$ for some $x \in D$ then $f$ reaches its maximum
+  over $D$ at $x$.
+\end{thm}
+
+\chapter{Differentiation: many variables}
+\section{Definition}
+We continue with the idea that the derivative of a function
+must give a good linear approximation to a function near a
+point. Now suppose we have a function that maps points in
+$\Re^n$ to points in $\Re^m$. Then the linear approximation
+to it must also map points from $\Re^n$ to $\Re^m$. 
+
+One way to map points in $\Re^n$ to $\Re^m$ is to multiply
+the input vector by a $m \times n$ matrix. Matrix
+multiplication is linear in the sense that sums and scalar
+multiples are preserved by the operation, i.e.\ if $A$ is a
+matrix, $\xi$ and $\eta$ are vectors and $\alpha$ is a
+scalar then
+\[A(\xi+\eta)=A\xi+A\eta,\qquad
+A(\alpha\xi)=\alpha(A\xi).\]
+In fact, one learns in linear algebra that all linear
+function from $\Re^n$ to $\Re^m$ are equal to multiplication
+by some $m \times n$ matrix.
+
+We want our linear approximation to $f$ at some point $x$ to
+give the same value as $f$ for the input $x$. To ensure this
+we add an appropriate constant to our approximating
+function. So, as a linear approximation we propose,
+\[g(y) = f(x) + A(y-x)\]
+for some $m \times n$ matrix $A$ still to be determined.
+
+Now once again we define differentiability as the existence
+of a matrix $A$ which will make this approximation good.
+
+\begin{defn}\label{defn:diff_n}
+  Let $f\colon \Re^n \to \Re^m$ be a function defined over
+  all of $\Re^n$. Let $x \in \Re^n$. We say that $f$ is
+  differentiable at $x$ if there exists a matrix $A$ such
+  that
+  \begin{equation}\label{eq:diffn:linapprox}
+    \lim_{y \to x}
+    \frac{\lvert f(y)-[f(x)+A(y-x)]\rvert}
+    {\lvert y-x \rvert}=0.
+  \end{equation}
+  In this case $A$ is said to be the derivative of $f$ at
+  $x$, a fact denoted by
+  \[Df(x)=f'(x)=A.\]
+\end{defn}
+
+You should compare this definition
+to~\eqref{eq:diff1:linapprox}, which is the corresponding
+definition in the single variable case. You will notice that
+in both cases we are demanding that the ratio of the
+approximation error to the change in inputs go to zero. The
+only difference is that since in the present case both the
+approximation error and the change in the input are vectors
+we need to consider the length of each (hence the $\lvert
+\cdot \rvert$ in the definition) in order to get a
+numerical measure of how large these errors and changes are.
+
+While we have defined the condition that a matrix $A$ has
+to satisfy in order to be the derivative of a function at a
+point, we still don't know how to find out if there is any
+matrix at all which satisfies this condition and if so how
+to calculate this matrix. In the next section we describe a
+situation where our knowledge of calculus in one variable
+will allow us to answer both these questions.
+
+\section{Continuously differentiable functions}
+\subsection{Partial derivatives}
+In this subsection we consider function which have only one
+output, that is functions $f$ from $\Re^n$ to $\Re$. We can
+imagine varying only one input of the function at a time and
+observing the change in the output. Let's say that we vary
+only the $j$-th input, holding the others constant. This
+defines for us a function of one variable,
+\[\phi(x_j) = f(x_1,\ldots,x_j,\ldots, x_n)\]
+where the values of $x_i, i\ne j$ are held constant.
+Remember that for different choices of these values we will
+get different functions $\phi$.
+
+Now suppose that $\phi$, considered as a function of one
+variable, is differentiable. Then its derivative is called
+the $j$-th partial derivative of the function $f$. Recalling
+the definition of the derivative of a function of one
+variable we have
+\[D_j f = \frac{\partial f}{\partial x_j}
+=\lim_{h \to 0} 
+\frac{f(x_1,\ldots, x_j+h,\ldots, x_n) 
+-f(x_1,\ldots,x_j,\ldots,x_n)}
+{h}.
+\]
+
+Note that the value of this limit depends not only on $x_j$
+but also on the constant values $x_i, i\ne j$ at which we
+evaluate it.
+
+The $j$-th partial derivative of $f$ allows us to construct
+a linear approximation to $f$ provided we are considering
+changes only in its $j$-th input. Next we try to put
+together these partial approximations for different $j$ to build a
+linear approximation which will work for any change in the
+inputs.
+
+\subsection{The class $C^1$.}
+To help us draw diagrams, let us look at a function $f$
+whose domain is two-dimensional. Suppose we are trying to
+get a linear approximation to this function near a point
+$\xi = \begin{bmatrix} \xi_1 & \xi_2 \end{bmatrix}$.
+
+Consider another point $\eta = \begin{bmatrix} \eta_1 &
+  \eta_2 \end{bmatrix}$. In general both the coordinates of
+$\eta$ will differ from those of $\xi$. 
+
+Now suppose we introduce an intermediate point $\gamma
+= \begin{bmatrix} \gamma_1 & \gamma_2\end{bmatrix}
+= \begin{bmatrix} \eta_1 & \xi_2\end{bmatrix}$ (See Figure~\ref{fig:diff-break-change}). Then the
+change from $\xi$ to $\gamma$ involves a change in only the
+first coordinate and that from $\gamma$ to $\eta$ involves
+a change only in the second coordinate. So we can approximate
+each of these changes using the corresponding partial
+derivative.
+\begin{align}
+  f(\gamma)-f(\xi) &\approx  (D_1 f)_{\xi}(\gamma_1-\xi_1)
+   = (D_1 f)_{\xi}(\eta_1-\xi_1)\label{eq:diff-breakc-x}\\
+  f(\eta)-f(\gamma) &\approx  (D_2 f)_{\gamma}(\eta_2-\gamma_2)
+   = (D_2 f)_{\gamma}(\eta_2-\xi_2)\label{eq:diff-breakc-y}
+\end{align}
+Here $D_1$ and $D_2$ denote the partial derivatives with
+respect to the two coordinates respectively while the
+subscripts $\xi$ and $\gamma$ denote the points at which
+these partial derivatives are evaluated.
+
+\begin{figure}
+  \begin{tikzpicture}
+    \coordinate (xend) at (5,0);
+    \coordinate (yend) at (0,5);
+    \draw [->] (0,0) -- (yend);
+    \draw [->] (0,0) -- (xend);
+    \coordinate (xi) at (1,1);
+    \node[above] at (xi) {$\xi$};
+    \coordinate (eta) at (4,4);
+    \node[above] at (eta) {$\eta$};
+    \coordinate (gamma) at (4,1);
+    \node[right] at (gamma) {$\gamma$};
+    \draw[->,thick] (xi) -- (eta);
+    \draw[->,thick] (xi) -- (gamma);
+    \draw[->,thick] (gamma) -- (eta);
+    \draw[dashed] (gamma) |- node[below] {$\eta_1=\gamma_1$} (xend);
+    \draw[dashed] (xi) |- node[below] {$\xi_1$} (xend);
+    \draw[dashed] (xi) -| node[left] {$\gamma_2=\xi_2$} (yend);
+    \draw[dashed] (eta) -| node[left] {$\eta_2$} (yend);
+  \end{tikzpicture}
+  \caption{Decomposing an arbitrary change into changes along coordinate axes.}
+  \label{fig:diff-break-change}
+\end{figure}
+
+Adding~\eqref{eq:diff-breakc-x} and~\eqref{eq:diff-breakc-y}
+we have
+\begin{align*}
+  f(\eta)-f(\gamma) &\approx (D_1 f)_\xi(\eta_1-\xi_1) 
+  + (D_2 f)_\gamma (\eta_2-\xi_2)\\
+  &=\begin{bmatrix} (D_1 f)_\xi & (D_2 f)_\gamma \end{bmatrix}
+  \begin{bmatrix} \eta_1-\xi_1 \\ \eta_2-\xi_2 \end{bmatrix}
+\end{align*}
+This begins to look very much like a linear approximation.
+The only remaining problem is that the matrix
+$\begin{bmatrix} (D_1 f)_\xi & (D_2 f)_\gamma \end{bmatrix}$
+is a function of $\gamma$ whereas the matrix~$A$ in the
+definition of the derivative (Definition~\ref{defn:diff_n})
+must be a constant for a particular point at which the
+derivative is being evaluated (in our case $\xi$). 
+
+This last hurdle can be crossed if $D_2 f$ is a continuous
+function since in that case $(D_2 f)_\gamma$ will be
+approximately equal to $(D_2 f)_\xi$ and we can replace the
+former by the latter to get a matrix which is a constant
+given $\xi$. The argument can be made precise and gives us,
+
+\begin{thm}
+  Consider a function $f\colon \Re^n \to \Re$. If all the
+  partial derivatives of $f$ exist and are continuous then
+  $Df$ exists and
+  \[Df = \begin{bmatrix} 
+    D_1 f & D_2 f & \hdots & D_n f
+    \end{bmatrix}.\]
+\end{thm}
+The result would not have been true without the assumption
+of continuity on the partial derivatives.
+
+We now want to generalise this result to functions with
+multiple outputs, i.e.\ functions $f \colon \Re^n \to
+\Re^m$. The way to do this is to think of each of the outputs
+as one particular function from $\Re^n$ to $\Re$, apply our
+previous result to each of these functions, and stack the
+answers together. This gives us,
+\begin{thm}\label{thm:c1-jacobian}
+  Consider a function $f\colon \Re^n \to \Re^m$. Define
+  functions $f_i, i=1,\ldots,m$ such that
+  \[f(x) = \begin{bmatrix}
+    f_1(x)\\
+    \vdots\\
+    f_m(x)
+    \end{bmatrix}
+  .\]
+  Suppose further that for each of the functions $f_i$ all
+  partial derivatives exist and are continuous. Then $Df$
+  exists and is given by
+  \[Df = \begin{bmatrix} 
+    D_1 f_1 & D_2 f_1 & \hdots & D_n f_1\\
+    D_1 f_2 & D_2 f_2 & \hdots & D_n f_2\\
+    \hdotsfor{4}\\
+    D_1 f_m & D_2 f_m & \hdots & D_n f_m
+    \end{bmatrix}
+    .\]
+\end{thm}
+
+Functions which satisfy the conditions of
+Theorem~\ref{thm:c1-jacobian} are called continuously
+differentiable functions or said to belong to the class
+$C^1$. For such $C^1$ functions
+Theorem~\ref{thm:c1-jacobian} not only tells us that the
+derivative exists but also tells us how to calculate it. 
+
+In fact it is further possible to show that for $C^1$
+functions $Df(x)$ is a continuous function of $x$, which is
+how this class gets its name. 
+
+\begin{xmpl}
+  Consider the function $f\colon \Re^2 \to \Re^3$ given by
+  \[f(x) = \begin{bmatrix}
+    x_1+x_2\\
+    x_1 - x_2\\
+    x_1 x_2\\
+   \end{bmatrix}.\]
+   So for example $f(\begin{bmatrix} 2 & 3 \end{bmatrix})
+   = \begin{bmatrix} 5 & -1 & 6 \end{bmatrix}$.
+
+   The component functions are
+   \begin{align*}
+     f_1(x) &= x_1+x_2\\
+     f_2(x) &= x_1-x_2\\
+     f_3(x) &= x_1 x_2
+   \end{align*}
+
+   Each of these component function has both partial
+   derivatives. They are,
+   \begin{align*}
+     D_1f_1 = 1,\qquad & D_2 f_1 = 1\\
+     D_1f_2 = 1,\qquad & D_2 f_2 = -1\\
+     D_1f_3 = x_2,\qquad & D_2 f_3 = x_1
+   \end{align*}
+   
+   We see that each of these partial derivatives are
+   continuous. Therefore, according to
+   Theorem~\ref{thm:c1-jacobian}, $Df$ exists and is given by
+   \[Df=
+   \begin{bmatrix}
+     1 & 1\\
+     1 & -1\\
+     x_2 &  x_1
+   \end{bmatrix}
+   .\]
+\end{xmpl}
+
+\section{The Chain Rule}
+\begin{thm}\label{thm:chainrule-n}
+  Let $h\colon \Re^n \to \Re^m$ and $g\colon \Re^m \to
+  \Re^q$ be differentiable functions. Suppose we define
+  $f\colon \Re^n \to \Re^q$ by
+  \[f(x)=g(h(x)).\]
+  Then $f$ is also differentiable and its derivative is
+  given by
+  \begin{equation}
+    \label{eq:chainrule-n}
+    Df(x) = [Dg(h(x))][Dh(x)].
+  \end{equation}
+\end{thm}
+
+In~\eqref{eq:chainrule-n}, $[Dh(x)]$ is a $m \times n$
+matrix and $Dg(h(x))$ is a $q \times m$ matrix and $Df$ is
+their product.
+
+\section{Directional derivatives and gradients}
+Given a function $f\colon \Re^n \to \Re$ and a point $x^*$,
+how does the value of $f$ change if we move a
+little bit in the same direction as some vector $v$? If $f$ is
+differentiable we can use calculus to investigate this
+question.
+
+First we define the function 
+\[\phi(\alpha)=x^* + \alpha v\]
+Then $\phi(0)=x^*$ and as $\alpha$ increase from $0$ we move
+away from $x^*$ in the direction given by $v$. 
+
+By writing the definition of $\phi$ in terms of components
+and taking derivatives we see that $D\phi(\alpha) =
+v$ for all $\alpha$.
+
+To see how this movement along $v$ affects $f$ we define another
+function
+\[\psi(\alpha) = f(\phi(\alpha))\]
+
+The derivative of $\psi$ gives us the rate of change of $f$
+as we move in the direction $v$. It is called the
+directional derivative of $f$ in the direction $v$ and
+denoted $D_vf$. 
+
+If $f$ is differentiable
+then the Chain Rule gives us,
+\begin{equation}\label{eq:dir-deriv-chain}
+D_vf(x^*)=\psi'(0) = Df(\phi(0))D\phi(\alpha)=Df(x^*)v
+\end{equation}
+
+From the definition of the derivative
+\begin{equation}\label{eq:lin-approx-dir}
+f(x^*+\alpha v) - f(x^*) = \psi(\alpha) - \psi(0) \approx
+\psi'(0)\alpha = \alpha Df(x^*)v
+\end{equation}
+
+Thus, whether moving a little bit in the direction $v$
+increases or decreases the value of $f$ depends on whether
+$Df(x^*)h$ is positive or negative in sign. There is an
+alternative way of writing this which helps in understanding
+the geometry of the situation.
+
+Since $f$ maps $\Re^n$ to $\Re$, $Df$ is the $1 \times n$
+matrix $\begin{bmatrix} D_1f & \hdots & D_n f\end{bmatrix}$
+and 
+\[(Df)v = (D_1f) v_1+\cdots+(D_nf) v_n\]
+
+We define the transpose of $(Df)$ as the gradient of $f$
+(denoted $\nabla f$). That is,
+\[\nabla f = \begin{bmatrix}
+D_1 f\\
+\vdots\\
+D_n f
+\end{bmatrix}.\]
+
+Now we can write $(Df)v$ as the scalar product $\dotprod{(\nabla
+f)}{v}$. The advantage of doing this is that we can use our
+geometrical intuition about the scalar product.
+Equation~\eqref{eq:lin-approx-dir} becomes,
+
+\[
+f(x^*+\alpha v) - f(x^*)  \approx
+\psi'(0)\alpha = \alpha Df(x^*)v = \alpha[\dotprod{(\nabla
+  f)}{v}].\]
+
+So a movement along $v$ approximately increases, leaves
+unchanged or decreases $f$ depending on whether $v$ makes an
+acute, right or obtuse angle with $\nabla f$.
+
+\section*{Exercises}
+\begin{xca}
+  Consider the function $f\colon \Re^3 \to \Re^2$ given by
+  \[f(x) = \begin{bmatrix}
+    x_1x_2\\
+    x_2x_3\\
+    \end{bmatrix}.
+   \]
+   Does $Df$ exist? If so, calculate its value.
+\end{xca}
+\begin{xca}
+  Consider the functions $f\colon \Re \to \Re^2$ and
+  $g\colon \Re^2 \to \Re$ given by,
+  \[f(t)=\begin{bmatrix}
+    t\sin(t)\\
+    t\cos(t)
+    \end{bmatrix},\qquad
+    g(x) = x_1^2 + x_2^2
+  \]
+  \begin{enumerate}
+  \item Calculate $Df$ and $Dg$.
+  \item Let $h\colon \Re \to \Re$ be given by $h(t) =
+    g(f(t))$. Give an explicit formula for $h(t)$.
+  \item Calculate $Dh$ using
+    \begin{enumerate}
+    \item the explicit formula derived above.
+    \item the Chain Rule.
+    \end{enumerate}
+  \end{enumerate}
+\end{xca}
+
+\begin{xca}
+  If $f$ and $g$ are continuously differentiable functions
+  from $\Re^n$ to $\Re$.
+  \begin{enumerate}
+    \item\label{lab:diffn:fg1} Show that
+      \[D(fg) = f(Dg) + g(Df).\]
+    \item Verify the result for
+      \[f(x) = x_1+x_2,\qquad g(x) = x_1 - x_2.\]
+    \item (Optional, harder) Would the result in
+      (\ref{lab:diffn:fg1}) still hold if we assumed only that
+      the functions were differentiable, rather than being
+      continuously differentiable?
+    \end{enumerate}
+\end{xca}
+
+\section*{References}
+Simon \& Blume, Chapter 14.
+
+\chapter{Optimization: many variables}
+\section{Unconstrained optimization}
+\begin{thm}\label{thm-nvar-ucopti}
+  If $f\colon \Re^n \to \Re$ attains its maximum  on the
+  set~$D$ at a point $x^*$, if $x^*$ is an interior point of $D$
+  and $f$ is differentiable at $x^*$ then it must be the case
+  that
+  \[Df(x^*)=0\]
+\end{thm}
+\begin{proof}
+  Let $h$ be an arbitrary nonzero vector. Define the
+  functions
+  \begin{align*}
+    \psi(\alpha) & = x^*+\alpha h\\
+    \phi(\alpha) &= f(\psi(\alpha))
+  \end{align*}
+  We restrict $\alpha$ to a small enough interval around
+  zero such that $\psi(\alpha) \in D$. This is possible since
+  $x^*$ is in the interior of $D$. Since $x^*$ is the point
+  where $f$ attains its maximum in $D$, it must be the case
+  that $\phi$ attains its maximum at $0$ which is an
+  interior point of its domain. Therefore by
+  Theorem~\ref{thm:opt1:interior} it must be be case that
+  \[\phi'(0) = 0\]
+  
+
+  By the chain rule $\phi'(0) = Df(x^*)D\psi(0)$. But a
+  direct calculation shows us that $D\psi = h$. Hence we
+  have
+  \[[Df(x^*)]h=0.\]
+  The above is true for any $h$. This is possible only if
+  \[Df(x^*)=0.\]
+\end{proof}
+
+Translated into the language of gradients the above theorem
+claims that
+\[\nabla f(x^*)=0.\]
+Suppose on the contrary that $\nabla f(x^*) \ne 0$. Consider the
+point
+\[y = x^* + \alpha\nabla f(x^*)\]
+Since $x^*$ is in the interior of $D$, we can ensure $y \in
+D$ by choosing $\alpha$ small enough. Then from the
+definition of the derivative we have
+\begin{align*}
+f(y) &\approx
+f(x^*) + \dotprod{\nabla f(x^*)}{(y-x^*)}\\
+&=f(x^*) + \alpha (\dotprod{\nabla f(x^*)}{\nabla f(x^*)})\\
+&\text{[Since $y = x^*+\alpha\nabla f(x^*)$]}\\
+&=f(x^*) + \alpha \lvert \nabla f(x^*) \rvert^2\\
+&>f(x^*)
+\end{align*}
+Since $y$ gives a higher value of the function than $x^*$,
+$x^*$ could not be the maximum point. 
+
+What stops this argument from being a proof is the
+approximately equals sign. Without accounting for the the
+approximation error we cannot be sure that
+$f(y)>f(x^*)$. Our actual proof bypasses this difficulty.
+
+\begin{xca}
+  Let $A$ be a matrix such that $Ax=0$ for all vectors
+  $x$. Show that it must be the case that $A=0$.
+\end{xca}
+
+\section{Equality constraints}
+\begin{thm}\label{thm:equality:foc}
+Let $f\colon\Re^n \to \Re$ and $g\colon \Re^n \to \Re$ be
+continuously differentiable functions. Consider the problem
+of maximising $f(x)$ subject to the constraint $g(x)=c$ for
+some $c$.
+
+If the maximum among the points satisfying the constraint is
+attained at the point $x^*$ and $\nabla g(x^*) \ne 0$ then
+there must exist a $\lambda \in \Re$ such that
+\[\nabla f(x^*) =\lambda \nabla g(x^*).\]
+\end{thm}
+
+\begin{figure}
+  \begin{tikzpicture}
+     \draw [->] (0,0) node[below] {$x^*$} -- +(30:2) node[above] {$\nabla g$} ;
+     \draw [->] (0,0) -- +(60:2) node[above] {$\nabla f$} ;
+     \draw [->] (0,0) -- +(120:1) node[above] {$h$} ;
+
+
+     \draw [->] (5,1) node[left] {$x^*$} -- +(30:2) node [above] {$\nabla g$} ;
+     \draw [->] (5,1) -- +(-30:2) node [above] {$\nabla f$} ;
+     \draw [->] (5,1) -- +(-60:1) node [below] {$h$} ;
+
+     \draw [->] (0,5) node[left] {$x^*$} -- +(30:2) node [above] {$\nabla g$} ;
+     \draw [->] (0,5) -- +(270:2) node [below] {$\nabla f$} ;
+     \draw [->] (0,5) -- +(-60:0.5) node [below] {$h$} ;
+
+     \draw [->] (6,5) node[below] {$x^*$} -- +(30:2) node [above] {$\nabla g$} ;
+     \draw [->] (6,5) -- +(180:2) node [above] {$\nabla f$} ;
+     \draw [->] (6,5) -- +(120:0.5) node [above] {$h$} ;
+  \end{tikzpicture}
+  \caption{Points which cannot be a maximum (Theorem~\ref{thm:equality:foc})}
+  \label{fig:equality:foc}
+\end{figure}
+
+Theorem~\ref{thm:equality:foc} says that at an optimal point
+the gradient of the objective function and that of the
+constraint function must be collinear. If they are not, then
+as Figure~\ref{fig:equality:foc} illustrates, there will be
+a direction $h$ that will make a right angle with $\nabla g$ and
+an acute angle with $\nabla f$. In that case, assuming the
+magnitude of $h$ to be small enough we will have
+\begin{align*}
+  g(x^*+h)- a &= g(x^*+h)-g(x^*) \approx \dotprod{\nabla
+    g(x^*)}{h} = 0\\
+  f(x^*+h)-f(x^*) &\approx \dotprod{\nabla f(x^*)}{h} > 0
+\end{align*}
+[We have used that fact that $g(x^*)=a$ since $x^*$
+satisfies the constraint.]
+
+If we could have replaced the approximate equalities in the
+above relations by exact equality we would have produced a
+proof that $x^*$ could not be a constrained maximizer since
+$x^*+h$ also satisfies the constraint and gives a higher
+value of the objective function.
+
+However, since we cannot make such a replacement of
+approximate equalities by exact equality, an actual proof of
+Theorem~\ref{thm:equality:foc} must be more complex. You can
+find such proofs in the references.
+
+The condition $\nabla g \ne 0$ is a technical requirement
+that is usually satisfied in economic applications.
+
+The scalar $\lambda$ in the theorem is called a Lagrange
+multiplier.
+
+\section*{Exercises}
+\begin{xca}
+  Maximise $x+y$ subject to $x^2+y^2=1$.
+\end{xca}
+
+\begin{xca}
+  Maximise $(x-4)^2-(y-4)^2$ subject to $x^2=0$.
+\end{xca}
+
+\begin{xca}
+  Argue that minimising $f(x)$ subject to $g(x)=c$ is
+  equivalent to maximising $-f(x)$ subject to $g(x)=c$.
+\end{xca}
+\end{document}
